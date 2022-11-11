@@ -1,11 +1,6 @@
 const express=require("express");
-const mongoose=require("mongoose")
+require("./config/dbConnect.js")();   //DB connection
 const app=express();
-
-//connect mongoose db
-mongoose().connect('mongodb+srv://atif:<LpKDtgT5JP7oCPmm>@cluster0.gjxjpka.mongodb.net/test')
-.then(()=>console.log("db connected"))
-.catch(err=>console.log(err));
 
 //Routes
   
