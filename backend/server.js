@@ -8,13 +8,13 @@ mongoose().connect('mongodb+srv://atif:<LpKDtgT5JP7oCPmm>@cluster0.gjxjpka.mongo
 .catch(err=>console.log(err));
 
 //Routes
-
+  
 //User
 //Register
 app.post('/api/users/register',(req,res)=>{
     res.send("user routes");
-})
-
+})   
+   
 //login
 app.post('/api/users/login',(req,res)=>{
     res.send("login routes");
