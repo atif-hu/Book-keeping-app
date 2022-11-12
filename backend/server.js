@@ -1,16 +1,25 @@
 const express=require("express");
+const Users = require("./models/Users.js");
 require("./config/dbConnect.js")();   //DB connection
 const app=express();
+
+app.use(express.json())
 
 //Routes
   
 //User
 //Register
-app.post('/api/users/register',(req,res)=>{
-    res.send("user routes");
+app.post('/api/users/register',async (req,res)=>{
+    try {
+        const user=await Users.create(req.body);
+        console.log(user);
+        res.send(user);
+    } catch (error) {
+        console.log(error);
+    }
 })   
    
-//login
+//login 
 app.post('/api/users/login',(req,res)=>{
     res.send("login routes");
 })
