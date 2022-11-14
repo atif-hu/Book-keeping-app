@@ -18,9 +18,25 @@ userRoutes.post('/register',asyncHandler(async(req,res)=>{
 }))   
 
 //login 
-userRoutes.post('/login',(req,res)=>{
-    res.send("login routes");
-})
+userRoutes.post('/login',asyncHandler(async(req,res)=>{
+    const {email,password}=req.body;
+    const user=await Users.findOne({email});
+    // const dehashed=
+    if(user){
+        res.status(200);
+        res.json({
+            _id:user._id,
+            name:user.name,
+            email:user.email,
+            password:user.password
+        })
+    }
+    else{
+        res.status(401);
+        throw new Error('Invalid credentials');
+        
+    }
+}))
 
 //update user
 userRoutes.put('/update',(req,res)=>{
