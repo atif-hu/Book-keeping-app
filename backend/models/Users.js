@@ -27,7 +27,11 @@ UserSchema.pre('save',async function(next){
     next();
 });
 
+//creating a function to check the entered password
 
+UserSchema.methods.isPassword=async function(enteredPass){
+    return await bcrypt.compare(enteredPass,this.password);
+};
 
 //create model            (model,   schema )
 const Users=mongoose.model("Users",UserSchema);

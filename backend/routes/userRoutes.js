@@ -2,7 +2,7 @@ const express=require('express');
 const Users = require('../models/Users');
 const userRoutes=express.Router();
 const asyncHandler=require('express-async-handler');
-
+Users
 //User
 //Register
 userRoutes.post('/register',asyncHandler(async(req,res)=>{
@@ -21,8 +21,8 @@ userRoutes.post('/register',asyncHandler(async(req,res)=>{
 userRoutes.post('/login',asyncHandler(async(req,res)=>{
     const {email,password}=req.body;
     const user=await Users.findOne({email});
-    // const dehashed=
-    if(user){
+
+    if(user && (await Users.isPassword(password))){
         res.status(200);
         res.json({
             _id:user._id,
