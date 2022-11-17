@@ -1,6 +1,7 @@
 //import mongoose
 const mongoose=require('mongoose');
 const bcrypt=require('bcryptjs');   
+const userRoutes = require('../routes/userRoutes');
 
 
 //Schema
@@ -29,13 +30,17 @@ UserSchema.pre('save',async function(next){
 
 //creating a function to check the entered password
 
-UserSchema.methods.isPassword=async function(enteredPass){
-    return await bcrypt.compare(enteredPass,this.password);
-};
+// const ip=async function(email,enteredPass){
+//     console.log("pass",enteredPass);
+//     console.log("this pass",this.password);
+
+//     return await bcrypt.compare(enteredPass,this.password);
+// };
+
 
 //create model            (model,   schema )
 const Users=mongoose.model("Users",UserSchema);
 
 
 //to make accessible export
-module.exports= Users; 
+module.exports= {Users}; 

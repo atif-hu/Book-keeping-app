@@ -1,9 +1,11 @@
 const express=require('express');
-const Users = require('../models/Users');
+const bcrypt=require('bcryptjs')
+const {Users} = require('../models/Users');
+
 const userRoutes=express.Router();
 const asyncHandler=require('express-async-handler');
-Users
 //User
+
 //Register
 userRoutes.post('/register',asyncHandler(async(req,res)=>{
     const {name,email,password}=req.body;
@@ -17,12 +19,21 @@ userRoutes.post('/register',asyncHandler(async(req,res)=>{
 
 }))   
 
+const ip=async function(email,enteredPass){
+    const user=await Users.findOne({email});
+    // console.log()
+    console.log("user ",user)
+    console.log("pass",enteredPass);
+    
+    return await bcrypt.compare(enteredPass,user.password);
+};
+
 //login 
 userRoutes.post('/login',asyncHandler(async(req,res)=>{
     const {email,password}=req.body;
     const user=await Users.findOne({email});
-
-    if(user && (await Users.isPassword(password))){
+    console.log(user)
+    if(user && (await ip(email,password))){
         res.status(200);
         res.json({
             _id:user._id,
