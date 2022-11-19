@@ -30,13 +30,9 @@ UserSchema.pre('save',async function(next){
 
 //creating a function to check the entered password
 
-// const ip=async function(email,enteredPass){
-//     console.log("pass",enteredPass);
-//     console.log("this pass",this.password);
-
-//     return await bcrypt.compare(enteredPass,this.password);
-// };
-
+UserSchema.methods.isPasswordMatch=async function(enteredPass){
+    return await bcrypt.compare(enteredPass,this.password);
+};
 
 //create model            (model,   schema )
 const Users=mongoose.model("Users",UserSchema);

@@ -4,6 +4,7 @@ const {Users} = require('../models/Users');
 
 const userRoutes=express.Router();
 const asyncHandler=require('express-async-handler');
+const generateToken = require('../utils/generateToken');
 //User
 
 //Register
@@ -15,31 +16,39 @@ userRoutes.post('/register',asyncHandler(async(req,res)=>{
         throw new Error('User already exists');
     }
     const user=await Users.create({name,email,password});
-    res.send("user created\n"+user);
+    // res.send("user created\n"+user);
+    res.json({
+        _id:user._id,
+        name:user.name,
+        email:user.email,
+        password:user.password,
+        token:generateToken(user._id)
+    })
 
 }))   
 
-const ip=async function(email,enteredPass){
-    const user=await Users.findOne({email});
-    // console.log()
-    console.log("user ",user)
-    console.log("pass",enteredPass);
+// const ip=async function(email,enteredPass){
+//     const user=await Users.findOne({email});
+//     // console.log()
+//     console.log("user ",user)
+//     console.log("pass",enteredPass);
     
-    return await bcrypt.compare(enteredPass,user.password);
-};
+//     return await bcrypt.compare(enteredPass,user.password);
+// };
 
 //login 
 userRoutes.post('/login',asyncHandler(async(req,res)=>{
     const {email,password}=req.body;
     const user=await Users.findOne({email});
     console.log(user)
-    if(user && (await ip(email,password))){
+    if(user && (await user.isPasswordMatch(password))){
         res.status(200);
         res.json({
             _id:user._id,
             name:user.name,
             email:user.email,
-            password:user.password
+            password:user.password,
+            token:generateToken(user._id)
         })
     }
     else{

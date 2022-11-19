@@ -2,7 +2,7 @@ const mongoose=require("mongoose");
 
 const dbConnect = () =>{
 //connect mongoose db
-mongoose.connect("mongodb+srv://atif:LpKDtgT5JP7oCPmm@cluster0.gjxjpka.mongodb.net/book-keeping-app")
+mongoose.connect(process.env.MONGODB_URL)
 .then(()=>console.log("db connected"))
 .catch(err=>console.log(err));
 }
