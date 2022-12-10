@@ -1,10 +1,10 @@
 const express=require('express');
-const bcrypt=require('bcryptjs')
 const {Users} = require('../models/Users');
 
 const userRoutes=express.Router();
 const asyncHandler=require('express-async-handler');
 const generateToken = require('../utils/generateToken');
+const authMiddleware = require('../middlewares/authMiddleware');
 //User
 
 //Register
@@ -69,8 +69,9 @@ userRoutes.delete('/:id',(req,res)=>{
 })
 
 //fetch data
-userRoutes.get('/',(req,res)=>{
-    res.send("fetch user");
+userRoutes.get('/',authMiddleware,(req,res)=>{
+    // console.log(req.headers);
+    res.send(req.user);
 })
 
 module.exports=userRoutes;

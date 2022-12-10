@@ -1,7 +1,8 @@
 const express=require("express");
 const dotenv=require('dotenv');
 const userRoutes=require('./routes/userRoutes.js');
-const error=require('./middlewares/errorMiddlewareHandler')
+const error=require('./middlewares/errorMiddlewareHandler');
+const bookRouter = require("./routes/bookRoutes.js");
 const app=express();
 
 dotenv.config();    //created env variable to keep the secret keys
@@ -12,7 +13,12 @@ require("./config/dbConnect.js")();   //DB connection       //db will be below d
 app.use(express.json())
     
 //Routes
+//User
 app.use('/api/users',userRoutes);
+
+//Book
+app.use('/api/books',bookRouter)
+
 
 //error middleware
 app.use(error.errorMiddlewareHandler)
