@@ -4,7 +4,6 @@ const { Users } = require("../models/Users");
 
 const authMiddleware=asyncHandler(async (req,res,next)=>{
     let token;
-    console.log(req.headers.authorization);
     if(req.headers.authorization && req.headers.authorization.startsWith("Bearer")){
         try {
             token=req.headers.authorization.split(' ')[1];
