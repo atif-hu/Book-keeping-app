@@ -20,4 +20,4 @@ const createBookReducer=(state={},action)=>{
     }
 }
 
-export{createBookReducer};
+export default createBookReducer;
