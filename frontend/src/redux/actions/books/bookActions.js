@@ -28,4 +28,4 @@ const createBookAction=bookData=>{
     };
 };
 
-export {createBookAction};
+export default createBookAction;

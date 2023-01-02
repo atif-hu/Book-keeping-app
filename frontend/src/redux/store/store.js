@@ -1,25 +1,14 @@
-import { combineReducers } from 'redux';
-import {applyMiddleware, legacy_createStore} from 'redux';
-// import {applyMiddleware, combineReducers, compose, legacy_createStore } from 'redux';
-// import thunk from 'redux-thunk';
+import {combineReducers, applyMiddleware } from "redux";
+import {configureStore} from '@reduxjs/toolkit'
+import thunk from "redux-thunk";
+import {composeWithDevTools} from 'redux-devtools-extension'
 import createBookReducer from '../reducers/books/createBookReducer.js'
+const middlewares=[thunk];
 
-// const middlewares=[thunk];
-
-// const reducer=combineReducers({
-//     bookCreated: createBookReducer,
-// })
-
-// const store=legacy_createStore(
-    //     reducer,
-    //     compose(applyMiddleware(...middlewares))
-    // )
-    // export  {store}
-import thunk from 'redux-thunk'; 
-const reducer=combineReducers({
+const reducer= combineReducers({
     bookCreated: createBookReducer,
-})
+});
 
-const store=legacy_createStore(reducer,applyMiddleware(thunk));
-
-export {store}; 
+const store=configureStore({reducer},applyMiddleware(...middlewares));
+console.log("hi")
+export {store};
